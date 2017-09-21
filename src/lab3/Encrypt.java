@@ -7,6 +7,18 @@ import java.util.Scanner;
  * @Version 2017-09-20
  * @Class Encrypt
  * @Encrypt will encrypt the input plain text
+ *
+ * Create a new Java program called Encrypt.java that will get a message from the user and use a shift cypher that
+ * will shift each letter to the right by three(A ->D,B->E,...,Z->C).to encrypt the message. Your program should remove
+ * all spaces and punctuation (‘,’,’.’,’!’,’?’,’(‘,’)’,’;’,’:’ only worry about those ones). Your encryption will ignore
+ * numbers (leave them unchanged) and only encryption letters. Your encrypted message should be printed to console with
+ * all upper-case letters.
+ *
+ * You are not allowed to use if statements or loops to solve this problem.
+ *
+ * Hint:use the Java String class API.
+ * Example the message ‘The quick red fox jumped over the lazy brown dog!’ Would be encoded to
+ * ‘WKHTXLFNUHGIRAMXPSHGRYHUWKHODCBEURZQGRJ’
  */
 public class Encrypt {
     public static void main(String[] args) {
