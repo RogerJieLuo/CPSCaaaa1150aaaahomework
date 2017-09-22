@@ -19,6 +19,7 @@ import java.util.Scanner;
  * Hint:use the Java String class API.
  * Example the message ‘The quick red fox jumped over the lazy brown dog!’ Would be encoded to
  * ‘WKHTXLFNUHGIRAMXPSHGRYHUWKHODCBEURZQGRJ’
+ *
  */
 public class Encrypt {
     public static void main(String[] args) {
@@ -70,7 +71,7 @@ public class Encrypt {
         plain = plain.replace(':',' ');
 
         // remove all number
-        plain = plain.replaceAll("[0-9]","");
+        plain = plain.replaceAll("[0-9]","");   // it's regex here, or can be list 0 - 9 separately.
         // remove all the space
         plain = plain.replaceAll(" ","");
 
