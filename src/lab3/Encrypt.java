@@ -69,6 +69,8 @@ public class Encrypt {
         plain = plain.replace(';',' ');
         plain = plain.replace(':',' ');
 
+        // remove all number
+        plain = plain.replaceAll("[0-9]","");
         // remove all the space
         plain = plain.replaceAll(" ","");
 
