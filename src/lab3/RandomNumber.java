@@ -8,14 +8,15 @@ import java.util.Random;
  * @Class RandomNumber
  * @RandomNumber will give a random phone number
  *
+ * Question:
+ * Write a program that creates and prints a random phone number of the form XXX-XXX-XXXX. Include the dashes in the
+ * output. Do not let the first three digits contain an 8 or a 9 (but don’t be more restrictive than that), and make
+ * sure that the second set of three digits is not greater than 655.And the sum of the last 4 digits should not be
+ * greater than21Hint: Think through the easiest way to construct the phone number. Each digit does not have to be,
+ * and should not be, determined separately.
  *
- * question:
- * Write a program that creates and prints a random phone number of the form XXX-XXX-XXXX.
- * Include the dashes in the output. Do not let the first three digits contain an 8 or a 9 (but don’t be more
- * restrictive than that), and make sure that the second set of three digits is not greater than 655.And the sum of
- * the last 4 digits should not be greater than21Hint: Think through the easiest way to construct the phone number.
- * Each digit does not have to be, and should not be, determined separately. You are not allowed to use if statements
- * to solve this problem
+ * You are not allowed to use if statements to solve this problem.
+ *
  */
 public class RandomNumber {
     public static void main(String[] args) {
@@ -30,7 +31,6 @@ public class RandomNumber {
         num2 = rand.nextInt(656);
 
         // get third set: the sum of 4 digits is not greater than 21
-
         num3a = rand.nextInt(10);
         num3b = rand.nextInt(10);
         num3c = rand.nextInt((22 - num3a - num3b)) % 10;
