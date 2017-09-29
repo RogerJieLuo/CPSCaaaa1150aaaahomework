@@ -1,0 +1,42 @@
+1). Caesar cipher;
+    Input: a string S, an integer key
+    steps:
+    1. set index = 0, plain = 'a', encrypted ='a';
+    2. for all character in S:
+        i.      set plain = current character
+        ii.     set encrypted = plain that move key position in alphabet
+        iii.    if encrypted beyond z or Z
+                    loop the encrypted start from a or A
+
+        iv.     S replace the current character with the encrypted character
+    3. OUTPUT S
+
+2). Comparing if two strings are the same lexicographically
+    Input: 2 strings, s1, s2
+    steps:
+    1. set index = 0, l1 = s1's length, l2 = s2's length, chkSame = true
+    2. if l1 equal l2
+         Repeat:
+            i.      set c1 = s1's character in index
+                    set c2 = s2's character in index
+            ii.     if c1 not equal c2
+                        set chkSame = false
+            iii.    add 1 to index
+
+            iv.     STOP when index = l1 or chkSame = false
+        otherwise
+            chkSame = false
+    3. OUTPUT chkSame
+
+3). Calculate the Nth number in a fibonacci sequence
+    Input: a integer N
+    steps:
+    1. set index = 2, n1 = 0, n2 = 1, temp = 0
+    2. Repeat:
+        i.      add 1 to index
+        ii.     set temp = n1 + n2
+        iii.    set n1 = n2
+                set n2 = temp
+
+        iv.     STOP when index = N
+    3. OUTPUT n2
