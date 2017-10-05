@@ -29,7 +29,7 @@ public class TicTacToe2 {
         char pToken ='X', aiToken = 'O';
         int count = 9;      // count the rest available cell
         String b = "123456789";
-        String AIOption="";     // generate the string to store the option that AI will choose
+        String AIOption= "123456789";     // generate the string to store the option that AI will choose
 
         // display the board
         for(int i = 0;i<b.length();i++){
@@ -44,20 +44,18 @@ public class TicTacToe2 {
             // user's turn
             turn ++;
             boolean validP = false;
-            int x, y;
             while(!validP) {
                 System.out.println("Pick a position: ");
                 position = sc.nextInt();
                 if(position>0 && position < 10 && b.charAt(position-1) != pToken && b.charAt(position-1) != aiToken){
                     validP = true;
-                    String str1 = b.substring(0, position-1);
-                    String str2 = b.substring(position);
-                    b = str1+pToken+str2;
+                    b = b.replace(b.charAt(position-1),pToken);
                     count--;
+                    AIOption = AIOption.replaceAll(position+"","");
                 }
             }
             // check if player wins
-            //      check horizontal
+            // check horizontal
             for(int i=0; i < b.length();i+=3){
                 if(b.charAt(i) == b.charAt(i+1) && b.charAt(i) == b.charAt(i+2)){
                     won = true;
@@ -65,7 +63,7 @@ public class TicTacToe2 {
             }
             // check vertical
             for(int i = 0;i<b.length()/3;i++){
-                if(b.charAt(i) == b.charAt(i+3) && b.charAt(i) == b.charAt(6)){
+                if(b.charAt(i) == b.charAt(i+3) && b.charAt(i) == b.charAt(i+6)){
                     won = true;
                 }
             }
@@ -91,20 +89,12 @@ public class TicTacToe2 {
 
             // AI's turn
             turn ++;
-            // generate a string for AI to avoid the occupied cells
-            AIOption = "";      // clean the old value
-            for (int i = 0; i < b.length(); i++) {
-                if(b.charAt(i)!=pToken && b.charAt(i)!=aiToken ) {
-                    AIOption += b.charAt(i);
-                }
-            }
-            //System.out.println(AIOption); // this is line for testing the ai option
+//            System.out.println(AIOption); // this is line for testing the ai option
             // randomly choose one value from the string
             positionAI = Integer.parseInt(""+AIOption.charAt(rand.nextInt(AIOption.length())));
-            String str1 = b.substring(0, positionAI-1);
-            String str2 = b.substring(positionAI);
-            b = str1+aiToken+str2;
+            b = b.replace(b.charAt(positionAI-1), aiToken);
             count--;
+            AIOption = AIOption.replaceAll(positionAI+"","");
             System.out.println("O picked position: "+positionAI);
             // check if player wins
             // check horizontal
@@ -115,7 +105,7 @@ public class TicTacToe2 {
             }
             // check vertical
             for(int i = 0;i<b.length()/3;i++){
-                if(b.charAt(i) == b.charAt(i+3) && b.charAt(i) == b.charAt(6)){
+                if(b.charAt(i) == b.charAt(i+3) && b.charAt(i) == b.charAt(i+6)){
                     won = true;
                 }
             }
