@@ -27,7 +27,6 @@ public class TicTacToe2 {
         boolean won = false;
         int turn = 0;
         char pToken ='X', aiToken = 'O';
-        int count = 9;      // count the rest available cell
         String b = "123456789";
         String AIOption= "123456789";     // generate the string to store the option that AI will choose
 
@@ -50,7 +49,6 @@ public class TicTacToe2 {
                 if(position>0 && position < 10 && b.charAt(position-1) != pToken && b.charAt(position-1) != aiToken){
                     validP = true;
                     b = b.replace(b.charAt(position-1),pToken);
-                    count--;
                     AIOption = AIOption.replaceAll(position+"","");
                 }
             }
@@ -84,19 +82,17 @@ public class TicTacToe2 {
             System.out.println();
 
             // check result of each turn
-            if(count == 0 || won) break;
+            if(AIOption.length() == 0 || won) break;
 
 
             // AI's turn
             turn ++;
-//            System.out.println(AIOption); // this is line for testing the ai option
             // randomly choose one value from the string
             positionAI = Integer.parseInt(""+AIOption.charAt(rand.nextInt(AIOption.length())));
             b = b.replace(b.charAt(positionAI-1), aiToken);
-            count--;
             AIOption = AIOption.replaceAll(positionAI+"","");
             System.out.println("O picked position: "+positionAI);
-            // check if player wins
+            // check if AI wins
             // check horizontal
             for(int i=0; i < b.length();i+=3){
                 if(b.charAt(i) == b.charAt(i+1) && b.charAt(i) == b.charAt(i+2)){
@@ -125,7 +121,7 @@ public class TicTacToe2 {
             System.out.println();
 
             // check result of each turn
-            if(count == 0 || won) break;
+            if(AIOption.length() == 0 || won) break;
             // end of AI turn
         }
 
