@@ -71,11 +71,13 @@ public class DNAScore {
             if(i<seq1.length()) {
                 a = seq1.charAt(i++);
             }else{
+                // once exceed the length of the str, place '-'
                 a = '-';
             }
             if(j<seq2.length()) {
                 b = seq2.charAt(j++);
             }else{
+                // once exceed the length of the str, place '-'
                 b = '-';
             }
             // calculate the score
@@ -85,7 +87,7 @@ public class DNAScore {
         return count;
     }
 
-    // calculate the score based on different match
+    // calculate each score based on different match
     private static int calScore(char a, char b){
         a = Character.toLowerCase(a);
         b = Character.toLowerCase(b);

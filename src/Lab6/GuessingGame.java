@@ -25,7 +25,7 @@ public class GuessingGame {
     // use Random to get a target number int range from i to j
     private static int getNumber(int i, int j){
         Random rand = new Random();
-        return rand.nextInt(j)+i;
+        return rand.nextInt(j-i+1)+i;
     }
 
     // get user input for guessing
