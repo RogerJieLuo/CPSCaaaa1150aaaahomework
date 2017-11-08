@@ -1,5 +1,6 @@
 package Lab8;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -16,6 +17,12 @@ public class ProteinScore {
         String s1, s2;
         // record the order of the matrix
         char[] order = {'A','R','N','D','C','Q','E','G','H','I','L','K', 'M','F','P','S','T','W','Y','V','*'};
+        int N = 5;
+        String[] ori = new String[N];  // store the original string input
+        String[] score = new String[N];       // store the score calculate progress
+        int[] total = new int[N];       // store the total score for original string
+        int[] orderIndex = new int[N];      // each time order the string based on the total score
+        int count = 0;                  // the input times
         // generate the matrix
         int[][] matrix = {
                 { 4, -1, -2, -2, 0, -1, -1, 0, -2, -1, -1, -1, -1, -2, -1, 1, 0, -3, -2, 0, -4},
@@ -44,24 +51,43 @@ public class ProteinScore {
         while(true){
             s1 = valInput(sc);
             if(s1.equals("-1")) break;
-            s2 = valInput(sc);
-            if(s2.equals("-1")) break;
 
-            // compare 2 strings
-            int len1 = s1.length();
-            int len2 = s2.length();
-            int lenDiff = Math.max(len1, len2) - Math.min(len1, len2);
-            // modify the short string
-            if(len1 > len2){
-                s2 = modify(s2, lenDiff);
-            }else{
-                s1 = modify(s1, lenDiff);
+            // check size of the arrays
+            if(ori[ori.length-1] != null){
+                System.out.println("reach max size. DOUBLE THEM!");
+                ori = dbStringArray(ori);
+                score = dbStringArray(score);
+                total = dbIntArray(total);
+                orderIndex = dbIntArray(orderIndex);
             }
 
-            // calculate score
-            calScore(s1, s2, matrix, order);
+            // starting compare all the strings
+            compare(s1, ori, score, total, matrix, order, count);
 
-            System.out.println("\nStart over:");
+            // create order
+            order(total, orderIndex, count);
+
+            // print
+            print(ori, score, total, orderIndex, count);
+
+//            for(int i = 0;i<count+1;i++){
+//                System.out.print(ori[i] +"\t");
+//            }
+//            System.out.println();
+//            for(int i = 0;i<count+1;i++){
+//                System.out.print(score[i] +"\t");
+//            }
+//            System.out.println();
+//            for(int i = 0;i<count+1;i++){
+//                System.out.print(total[i] +"\t");
+//            }
+//            System.out.println();
+//            for(int i = 0;i<count+1;i++){
+//                System.out.print(orderIndex[i] +"\t");
+//            }
+//            System.out.println();
+            // count added
+            count ++;
         }
 
         System.out.println("End");
@@ -92,6 +118,116 @@ public class ProteinScore {
         return true;
     }
 
+    public static void compare(String str, String[] ori, String[] score, int[] total, int[][] matrix, char[] order,
+                               int count){
+
+        ori[count] = str;   // insert the string to the ori array
+//        for(int i = 0;i<count+1;i++){
+//            System.out.println(ori[i]);
+//        }
+        score[count] = "";
+
+        int len2, lenDiff, _score;
+//        String s1= str, s2;
+        // compare to the current
+        for(int i = 0;i<count;i++){
+
+            // start calculating
+            String s1 = str;
+            String s2 = ori[i];
+            int len1 = str.length();
+
+            len2 = ori[i].length();
+            lenDiff = Math.max(len1, len2) - Math.min(len1, len2);
+
+            // modify the short string
+            if(len1 > len2){
+                s2 = modify(s2, lenDiff);
+            }else{
+                s1 = modify(s1, lenDiff);
+            }
+            // get the score return
+            _score = calScore(s1, s2, matrix, order);
+
+            // update the score list
+            if(count == 1) {
+                score[i] = "" + _score;
+            }else {
+                score[i] = score[i] + "+" + _score;
+            }
+            if(i == 0){
+                score[count] = "" + _score;
+            }else {
+                score[count] = score[count] + "+" + _score;
+            }
+            // update the total score
+            total[i] = total[i] + _score;
+            total[count] = total[count] + _score;
+        }
+
+//        for(int i = 0;i<count+1;i++){
+//            System.out.println(total[i]);
+//        }
+
+    }
+
+    public static String[] dbStringArray(String[] arr){
+        return Arrays.copyOf(arr, arr.length*2);
+    }
+
+    public static int[] dbIntArray(int[] arr){
+        return Arrays.copyOf(arr, arr.length*2);
+    }
+
+    // ordering
+    public static void order(int[] total, int[] orderIndex, int count){
+        if(count == 0){
+            // only display the first string
+            return;
+        }
+        int[] _order = new int[count+1];
+        for(int i =0;i<count+1;i++){
+            _order[i] = total[i];
+        }
+        int[] temp = Arrays.copyOf(total, count+1);
+        Arrays.sort(_order);
+//        for(int i = 0;i<count+1;i++){
+//            System.out.println(_order[i]);
+//        }
+        for(int i = 0;i<_order.length;i++){
+            for(int j = 0;j<count+1;j++){
+                if(temp[j] == _order[i]){
+                    orderIndex[i] = j;
+                    temp[j] = Integer.MIN_VALUE;
+                    break;
+                }
+            }
+        }
+//        for(int i = 0;i<count+1;i++){
+//            System.out.println(orderIndex[i]);
+//        }
+    }
+
+    public static void print(String[] ori, String[] score, int[] total, int[] orderIndex, int count){
+        if(count == 0){
+            System.out.println(ori[0] + " "+ 0);
+            return;
+        }
+        String s, _score="";
+        for(int i = 0;i<count+1;i++){
+            int index = orderIndex[i];
+            s = ori[index];
+            if(score[index] != null){
+                _score = score[index];
+            }
+            System.out.println(s + " "+ _score +" "+ total[index]);
+        }
+
+//        for(int i = 0;i<count+1; i++){
+//            System.out.println(total[i]);
+//        }
+    }
+
     // modify the short string
     public static String modify(String str, int lenDiff){
         String newStr = "";
@@ -116,16 +252,6 @@ public class ProteinScore {
         int i = 0;
         int total = 0;
 
-        // print 2 sequences
-        for(int j = 0;j< s1.length();j++){
-            System.out.printf("%3s ",s1.charAt(j));
-        }
-        System.out.println();
-        for(int j = 0;j< s2.length();j++){
-            System.out.printf("%3s ",s2.charAt(j));
-        }
-        System.out.println();
-
         // start calculating
         while(i < s1.length()){
             char a = s1.charAt(i);
@@ -136,10 +262,10 @@ public class ProteinScore {
             int bi = getIndex(b, order);
 
             total += matrix[bi][ai];
-            System.out.printf("%3d ", matrix[bi][ai]);
+//            System.out.printf("%3d ", matrix[bi][ai]);
             i++;
         }
-        System.out.printf("%3d ", total);
+//        System.out.printf("%3d ", total);
         return total;
     }
 
